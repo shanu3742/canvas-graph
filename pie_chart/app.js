@@ -53,9 +53,6 @@ class PieChart {
            this.ctx.closePath();
            this.ctx.strokeWidth='1px';
            this.ctx.stroke();
-
-           //update end angle 
-
            _startAngle= _endAngle;
 
 
@@ -63,7 +60,7 @@ class PieChart {
 
 
     }
-
+   
     setDimension(width,height,radius){
        this.#width=width;
        this.#height=height;
@@ -80,6 +77,7 @@ class PieChart {
        this.drawGraph();
     }
     setColor(color){
+        console.log(color);
       this.#color=color;
       this.drawGraph();
     }
@@ -101,9 +99,32 @@ class PieChart {
 
 }
 
+
+
 let pieChart= new PieChart(canvas,dimension.width,dimension.height,dimension.radius,['red','green','yellow','pink'],[30,10,40,25])
 pieChart.drawGraph();
-pieChart.setColor(['blue','green','yellow','red']);
+
+/**
+ * generate gradient color 
+ * 
+ */
+const getGradientColor = (ctx, color1, color2,color3, width, height,radius) => {
+    const gradient = ctx.createRadialGradient(width/2, height/2, 10, width/2, height/2, radius);
+    // Add three color stops
+    gradient.addColorStop(0, color1);
+    gradient.addColorStop(0.8, color2);
+    gradient.addColorStop(1, color3);
+
+    return gradient;
+
+}
+
+pieChart.setColor([
+    getGradientColor(pieChart.getContext(),'white','blue','black',pieChart.getProperties().width,pieChart.getProperties().height,pieChart.getProperties().radius),
+    getGradientColor(pieChart.getContext(),'white','green','black',pieChart.getProperties().width,pieChart.getProperties().height,pieChart.getProperties().radius),
+    getGradientColor(pieChart.getContext(),'white','yellow','black',pieChart.getProperties().width,pieChart.getProperties().height,pieChart.getProperties().radius),
+    getGradientColor(pieChart.getContext(),'white','red','black',pieChart.getProperties().width,pieChart.getProperties().height,pieChart.getProperties().radius)
+]);
 console.log(pieChart.getProperties())
 
 window.addEventListener('resize',() => {
@@ -114,3 +135,12 @@ window.addEventListener('resize',() => {
     console.log('resize',dimension)
     pieChart.setDimension(dimension.width,dimension.height,dimension.radius)
 })
+let intervalCount=0;
+
+let intervalSub = setInterval(() => {
+    pieChart.setData([Math.floor(Math.random()*100),Math.floor(Math.random()*100),Math.floor(Math.random()*100),Math.floor(Math.random()*100)])
+    intervalCount++;
+    if(intervalCount>=10){
+        clearInterval(intervalSub);
+    }
+},5000)
