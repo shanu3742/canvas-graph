@@ -22,7 +22,7 @@ class Snake {
     };
     canavs=null;
     ctx=null;
-    snakeSpeed=0.5;
+    snakeSpeed=0.89;
     snakeSpeedFactor=0.1;
     snakeDirection='right'
     snakeTail=[];
@@ -179,10 +179,25 @@ class Snake {
 
  
   }
+  getBoundries(){
+    if(this.snakeHeadPosition.x<0){
+        this.snakeHeadPosition.x=this.width;
+    }
+    if(this.snakeHeadPosition.x>this.width){
+        this.snakeHeadPosition.x=0;
+    }
+    if(this.snakeHeadPosition.y<0){
+        this.snakeHeadPosition.y=this.height;
+    }
+    if(this.snakeHeadPosition.y>this.height){
+        this.snakeHeadPosition.y=0;
+    }
+  }
     
     playGame = () =>{
         this.clearCanvas();
         this.update();
+        this.getBoundries()
         this.createSnakeHead();
         this.updateTail()
         this.createFood();
