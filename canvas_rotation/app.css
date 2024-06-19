@@ -22,3 +22,27 @@ svg{
 text{
     font-size: 12px;
 }
+#score{
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 10px;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: rgb(252, 107, 107); */
+  color: white;
+  font-size: 20px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+#canvas{
+    border: 1px solid white;
+    background-color: transparent;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#canvas:hover{
+}

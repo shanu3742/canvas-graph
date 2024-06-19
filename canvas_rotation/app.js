@@ -22,7 +22,7 @@ class Snake {
     };
     canavs=null;
     ctx=null;
-    snakeSpeed=0.3;
+    snakeSpeed=0.5;
     snakeSpeedFactor=0.1;
     snakeDirection='right'
     snakeTail=[];
@@ -121,29 +121,49 @@ class Snake {
     if(this.snakeTail.length>0){
         if(this.snakeDirection==='right'){
            this.snakeTail.forEach((element,index) =>{
-            this.snakeTail[index].x=this.snakeHeadPosition.x-(this.snakeHeadPosition.size/2)*(index+1);
+         if(index===0){
+            this.snakeTail[index].x=this.snakeHeadPosition.x-(this.snakeHeadPosition.size/2);
             this.snakeTail[index].y=this.snakeHeadPosition.y;
+         }else{
+            this.snakeTail[index].x= this.snakeTail[index-1].x-(this.snakeHeadPosition.size/2);
+            this.snakeTail[index].y=this.snakeTail[index-1].y;
+         }
            })
 
         }
         if(this.snakeDirection==='left'){
             this.snakeTail.forEach((element,index) =>{
-                this.snakeTail[index].x=this.snakeHeadPosition.x+(this.snakeHeadPosition.size/2)*(index+1);
-                this.snakeTail[index].y=this.snakeHeadPosition.y;
+                if(index===0){
+                    this.snakeTail[index].x=this.snakeHeadPosition.x+(this.snakeHeadPosition.size/2);
+                    this.snakeTail[index].y=this.snakeHeadPosition.y;
+                }else{
+                    this.snakeTail[index].x= this.snakeTail[index-1].x+(this.snakeHeadPosition.size/2);
+                    this.snakeTail[index].y=this.snakeTail[index-1].y;
+                }
                })
     
         }
         if(this.snakeDirection==='up'){
             this.snakeTail.forEach((element,index) =>{
+               if(index===0){
                 this.snakeTail[index].x=this.snakeHeadPosition.x;
-                this.snakeTail[index].y=this.snakeHeadPosition.y+(this.snakeHeadPosition.size/2)*(index+1);
+                this.snakeTail[index].y=this.snakeHeadPosition.y+(this.snakeHeadPosition.size/2);
+               }else{
+                this.snakeTail[index].x= this.snakeTail[index-1].x;
+                this.snakeTail[index].y=this.snakeTail[index-1].y+(this.snakeHeadPosition.size/2);
+               }
                })
             
         }
         if(this.snakeDirection==='down'){
             this.snakeTail.forEach((element,index) =>{
-                this.snakeTail[index].x=this.snakeHeadPosition.x;
-                this.snakeTail[index].y=this.snakeHeadPosition.y-(this.snakeHeadPosition.size/2)*(index+1);
+                if(index===0){
+                    this.snakeTail[index].x=this.snakeHeadPosition.x;
+                    this.snakeTail[index].y=this.snakeHeadPosition.y-(this.snakeHeadPosition.size/2);
+                }else{
+                    this.snakeTail[index].x= this.snakeTail[index-1].x;
+                    this.snakeTail[index].y=this.snakeTail[index-1].y-(this.snakeHeadPosition.size/2);
+                }
                })
         }
 
@@ -173,6 +193,8 @@ class Snake {
  
     onScoreChange(){
         console.log('inside Score changed',this.score);
+        document.getElementById('score').innerHTML=`Score: ${this.score}`;
+
         return this.score;
     }
    
